@@ -1,14 +1,11 @@
-References: https://medium.com/@juanpedro.bc22/detailed-explanation-of-yolov8-architecture-part-1-6da9296b954e and https://youtu.be/HQXhDO7COj8?si=1zRhCbkiAkM65nTm
-
 ![Architecture](images/architecture.webp)<br>
 ![Architecture](images/architecture2.png)<br>
-![Architecture](images/architecture3.png)<br>
 
 <br>
 
 # Main Blocks
 ## Backbone
-![backbone](images/backbone.png)
+![backbone](images/backbone.jpg)
 
 **Function**: The backbone, the feature extractor, responsible for extracting meaningful features ***from the input***.
 
@@ -25,11 +22,12 @@ References: https://medium.com/@juanpedro.bc22/detailed-explanation-of-yolov8-ar
   ![C2f](images/c2f.jpg)
     - *Bottleneck*: sequence of convolutional blocks with a shortcut option.<br>
     ![Bottleneck](images/bottleneck.jpg)
+- *SPPF (Spatial Pyramid Pooling Fast)*: located at the end of the Backbone, aggregates information from different scales, ensuring the model captures features from various receptive fields (sizes of objects).<br>
+![SPPF](images/sppf.jpg)
 
 
 ## Neck
-![neck](images/neck.png)<br>
-*The neck part is located in the purple-colored area, while the green-colored area represents the backbone.*
+![neck](images/neck.jpg)<br>
 
 **Function**: The neck acts as a ***bridge between the backbone and the head***. Basically the Neck assembles feature pyramids by aggregating feature maps obtained by the Backbone.
 
@@ -39,16 +37,14 @@ References: https://medium.com/@juanpedro.bc22/detailed-explanation-of-yolov8-ar
 - Reduces the spatial resolution and dimensionality of resources to facilitate computation, a fact that increases speed but can also reduce the quality of the model.
 
 **Components**:
-- *SPPF (Spatial Pyramid Pooling Fast)*: located at the end of the Backbone, aggregates information from different scales, ensuring the model captures features from various receptive fields (sizes of objects).<br>
-![SPPF](images/sppf.jpg)
 - *Concat*: merges feature maps from different layers, allowing the model to combine features at various scales (e.g., P3, P4, P5).
 - *Upsample*: increases the resolution of feature maps, enabling the model to retain more spatial detail, which is crucial for detecting smaller objects.
 - *Additional C2f and Conv layers*: used to process the feature maps and prepare them, same as in the Backbone.
 
 
 ## Head
-![head](images/head.png)<br>
-*The head part is located in the red-colored area, while the purple-colored area represents the neck.*
+![head](images/head1.jpg)<br>
+![head](images/head2.jpg)<br>
 
 **Function**: The Head is responsible for making the final predictions, which include the bounding box coordinates (localization), object class (classification), and confidence scores.
 
@@ -88,3 +84,9 @@ Padding is the process of adding extra pixels (typically zeros) around the input
 
 ## Variables Variant
 ![variables](images/variables.png)
+
+
+# References: 
+- https://medium.com/@juanpedro.bc22/detailed-explanation-of-yolov8-architecture-part-1-6da9296b954e
+- https://youtu.be/HQXhDO7COj8?si=1zRhCbkiAkM65nTm
+- https://github.com/dtdo90/yolov8_detection/tree/main
